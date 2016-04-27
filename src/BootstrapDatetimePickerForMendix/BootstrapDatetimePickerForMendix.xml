@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="BootstrapDatetimePickerForMendix.widget.BootstrapDatetimePickerForMendix" needsEntityContext="true" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>BootstrapDatetimePickerForMendix</name>
+    <description>The description of this widget.</description>
+
+    <icon />
+
+    <properties>
+        <property key="dateTimeAttribute" type="attribute">
+            <caption>Datetime source</caption>
+            <category>Data source</category>
+            <description>The Datetime attribute</description>
+            <attributeTypes>
+                <attributeType name="DateTime" />
+            </attributeTypes>
+        </property>
+        <property key="mfToExecute" type="microflow" required="false" defaultValue="">
+            <caption>Microflow</caption>
+            <category>Behavior</category>
+            <description>The microflow to execute on click.</description>
+            <returnType type="Boolean" />
+        </property>
+    </properties>
+</widget>
