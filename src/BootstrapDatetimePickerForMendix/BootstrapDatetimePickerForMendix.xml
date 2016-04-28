@@ -14,11 +14,11 @@
                 <attributeType name="DateTime" />
             </attributeTypes>
         </property>
-        <property key="mfToExecute" type="microflow" required="false" defaultValue="">
-            <caption>Microflow</caption>
-            <category>Behavior</category>
-            <description>The microflow to execute on click.</description>
-            <returnType type="Boolean" />
+        <property key="onChangeMicroflow" type="microflow" required="false">
+            <caption>On change</caption>
+            <category>Events</category>
+            <description>Run this microflow when the user leaves the date time field and has changed the value</description>
+            <returnType type="Void"/>
         </property>
     </properties>
 </widget>

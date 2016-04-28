@@ -61,7 +61,7 @@ require({
     "bootstrap-datetimepicker",
 
     "dojo/text!BootstrapDatetimePickerForMendix/widget/template/BootstrapDatetimePickerForMendix.html"
-], function(declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, dojoProp, dojoGeometry, dojoClass, dojoStyle, dojoConstruct, dojoArray, dojoLang, dojoText, dojoHtml, dojoEvent, _jqwrapper, _bootstrap, moment, _dateTimePicker, widgetTemplate) {
+], function(declare, _WidgetBase, _TemplatedMixin, dom, dojoDom, dojoProp, dojoGeometry, dojoClass, dojoStyle, dojoConstruct, dojoArray, dojoLang, dojoText, dojoHtml, dojoEvent, _jqwrapper, _bootstrap, _moment, _dateTimePicker, widgetTemplate) {
     "use strict";
 
     var $ = _jqwrapper;
@@ -75,18 +75,10 @@ require({
         // _TemplatedMixin will create our dom node using this HTML template.
         templateString: widgetTemplate,
 
-        // DOM elements
-        dateTimeNode: null,
-        dateTimeInputNode: null,
-        dateTimeSelectNode: null,
-        infoTextNode: null,
-
         // Parameters configured in the Modeler.
         _$inputGroup: null,
         _$input: null,
-        mfToExecute: "",
         _dateTimeAttribute: "",
-
 
         // Internal variables. Non-primitives created in the prototype are shared between all widget instances.
         _handles: null,
@@ -162,17 +154,26 @@ require({
                 if (dojoClass.contains(this.domNode, 'hidden')) {
                     dojoClass.remove(this.domNode, 'hidden');
                 }
-
-
-
+                
+                var prevDate = '';
+                
                 this._$inputGroup.datetimepicker({
-                    //format: "dddd, MMMM Do YYYY, h:mm:ss a",
+                    format: "dddd, MMMM Do YYYY, h:mm:ss a",
                     showClose: true,
                 }).on("dp.change", function(e) {
-                    moment.unix(e.date);
                     self._contextObj.set(self.dateTimeAttribute, e.date);
+                    prevDate = e.oldDate;
+                }).on("dp.hide", function(e) {
+                    var currentDate = e.date;
+                    //Execute OnC microflow
+                    if( self.onChangeMicroflow && !currentDate.isSame(prevDate)) {
+                        self._execMf(self._contextObj.getGuid(), self.onChangeMicroflow);
+                    }
+                    prevDate = currentDate;
                 });
-
+                
+                
+                
             this._contextObj = obj;
             this._resetSubscriptions();
             this._updateRendering();
@@ -237,9 +238,9 @@ require({
                 var currentDate = this._contextObj.get(this._dateTimeAttribute);
                 var currentValue = '';
                 if(currentDate){
-                   currentValue = currentDate;
+                    currentValue = moment(new Date(currentDate)).format("dddd, MMMM Do YYYY, h:mm:ss a");
                 }
-
+                
                 this._$input.val(currentValue);
             }
 
@@ -334,6 +335,27 @@ require({
 
                 this._handles = [ objectHandle, attrHandle, validationHandle ];
             }
+        },
+        
+        _execMf: function (guid, mf, cb) {
+            if (guid && mf) {
+                mx.data.action({
+                    params: {
+                        applyto: 'selection',
+                        actionname: mf,
+                        guids: [guid]
+                    },
+                    callback: function () {
+                        if (cb) {
+                            cb();
+                        }
+                    },
+                    error: function (e) {
+                        console.error('Error running Microflow: ' + e);
+                    }
+                }, this);
+            }
+
         }
     });
 });
