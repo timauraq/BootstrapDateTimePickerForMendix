@@ -12,7 +12,10 @@
 
     Documentation
     ========================
-    Describe your widget here.
+    
+    This widget is a wrapper for the "Bootstrap 3 Date/Time Picker" by Jonathan Peterson.
+    
+    It allows the user to pick a date and time within the same field.
 */
 
 // Required module list. Remove unnecessary modules, you can always get them back from the boilerplate.
