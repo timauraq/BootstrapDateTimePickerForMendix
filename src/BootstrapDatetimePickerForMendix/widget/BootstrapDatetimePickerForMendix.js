@@ -158,8 +158,8 @@ require({
                 var prevDate = '';
                 
                 this._$inputGroup.datetimepicker({
-                    format: "dddd, MMMM Do YYYY, h:mm:ss a",
-                    showClose: true,
+                    format: self.dateTimeFormat || "dddd, MMMM Do YYYY, h:mm:ss a",
+                    showClose: true
                 }).on("dp.change", function(e) {
                     self._contextObj.set(self.dateTimeAttribute, e.date);
                     prevDate = e.oldDate;
@@ -238,7 +238,7 @@ require({
                 var currentDate = this._contextObj.get(this._dateTimeAttribute);
                 var currentValue = '';
                 if(currentDate){
-                    currentValue = moment(new Date(currentDate)).format("dddd, MMMM Do YYYY, h:mm:ss a");
+                    currentValue = moment(new Date(currentDate)).format(this.dateTimeFormat);
                 }
                 
                 this._$input.val(currentValue);

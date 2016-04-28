@@ -10,7 +10,7 @@
     <properties>
         <property key="dateTimeAttribute" type="attribute">
             <caption>Datetime source</caption>
-            <category>Data source</category>
+            <category>General</category>
             <description>The Datetime attribute</description>
             <attributeTypes>
                 <attributeType name="DateTime" />
@@ -18,9 +18,14 @@
         </property>
         <property key="onChangeMicroflow" type="microflow" required="false">
             <caption>On change</caption>
-            <category>Events</category>
+            <category>General</category>
             <description>Run this microflow when the user leaves the date time field and has changed the value</description>
             <returnType type="Void"/>
+        </property>
+        <property key="dateTimeFormat" type="string">
+            <caption>Datetime format</caption>
+            <category>General</category>
+            <description>Display the datetime field in a valid momentjs format</description>        
         </property>
     </properties>
 </widget>
