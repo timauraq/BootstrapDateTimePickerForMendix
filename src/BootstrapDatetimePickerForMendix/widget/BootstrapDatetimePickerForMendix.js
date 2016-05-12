@@ -238,6 +238,7 @@ require({
 
 
               if( this._contextObj ) {
+                this.mxDTPicker.disabled = this.readOnly;
                 var currentDate = this._contextObj.get(this._dateTimeAttribute);
                 var currentValue = '';
                 if(currentDate){

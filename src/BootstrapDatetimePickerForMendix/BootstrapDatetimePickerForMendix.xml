@@ -26,6 +26,6 @@
             <caption>Datetime format</caption>
             <category>General</category>
             <description>Display the datetime field in a valid momentjs format</description>        
-        </property>
+        </property> 
     </properties>
 </widget>
